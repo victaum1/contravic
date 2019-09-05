@@ -22,18 +22,20 @@ El lenguaje utilizado para la implementación será python en su version
 algo equivalente. Para la construción podría utilizarse "pybuilder" o
 su equivalente.
 
-* Dependencias
+* Dependencias:
 Para la cryptografia se utilizaría el paquete "Cryptodomex", o alguna
 versión de encriptación simétrica basada en "AES". Para la base de datos
 en texto se podria utilizar "tinyDB" (NO SQL). Para la serialización se
 podría usar "JSON" o "YAML". Para el "GUI"  "tkinter" o "py2GUI".
 
 * ¿Cómo se haran las pruebas?
+
 Las pruebas unitarias se realizaran con el paquete estandar "unittest" o "pytest".
 
-* Despliegue
+* Despliegue:
 El objetivo es una aplicación independiente para el manejo personal de contraseñas. El binario final podría construirse con "cython" o "cs_frezze".
 
 * ¿Con quién me contacto?
+
 Con el dueño del repo o administrador:
 (victorma31@gmail.com)
