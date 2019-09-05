@@ -1,0 +1,40 @@
+lang ES:
+------------------------------------------------------------------------------
+Programa personal de manejo de contraseñas "ContraVic"
+VER 0.1.0
+
+En un inicio el program debe simplemente cifrar un archivo de textos de
+contraseñas.
+
+VER 0.9.0
+
+Despues se debe poder Crear, Leer, Actulizar y Destruir registros del
+archivo de texto. El archivo de texto descifrado debería estar en la
+memoria. El archivo de texto cifrado pasaría al disco donde se puede recuperar.
+
+VER 1.0.1
+
+En esta iteración se deben porder manejar facilmente las funciones en la línea
+de comandos
+
+VER ----
+
+Al cerrar el archivo de texto en memoria se debe rellenar la memoria 
+ocupada aleatoriamente.
+
+Al extraer una contraseña de la base de datos debe quedar en el
+portapapeles listo para ser usada por otra aplicación.
+
+Al cerrar la aplicación el portapapeles debe limpiarse o llenarse con texto
+aleatorio.
+
+VER > 2.0.1
+
+Al final se debe acabar con una aplicación tipo GUI para el manejo de
+contraseñas.
+-------------------------------------------------------------------------------
+lang EN:
+
+-------------------------------------------------------------------------------
+
+
