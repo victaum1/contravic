@@ -1,0 +1,22 @@
+# Begin of in_put.yml
+# Passwords text database
+
+-
+  Id: 0
+  AcountName: FICS
+  Users: [{User: lotto, PassWord: "" , CreatedOn: "25/06/2010"}]
+  ThirdPartyAcount: []
+  ReferencedAcount: [gmail]
+-
+  Id: 1
+  AcountName: Theta Music Trainer
+  Users: [{User: verma, PassWord: "", CreatedOn: "30/12/2012"}]
+  ThirdPartyAcount: []
+  ReferencedAcount: [yahoo]
+-
+  Id: 2
+  AcountName: Lycos
+  Users: [{User: martel, PassWord: "", CreatedOn: "5/10/2007"}]
+  ThirdPartyAcount: []
+  ReferencedAcount: [hotmail]
+
