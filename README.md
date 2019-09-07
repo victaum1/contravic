@@ -4,8 +4,7 @@ contravic
 ### Motivation ###
 This will be a personal program for management of passwords. there are many versions of this in the market. Being a person that could be properly called a programmer, does not make sense use any of that if first one does not make their own version. After all it is personal information. In the level of a normal competent programmer, should have the expertise and knowledge to be able to realize this kind of a project.
 
-* version 0.10
-the versioning will be the one in:
+* version 0.10: the versioning will be the one in 
 (https://semver.org/)
 
 ### How to get setup? ###
