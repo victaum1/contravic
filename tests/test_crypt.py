@@ -19,13 +19,13 @@ class TestCrypto(unittest.TestCase):
         i_f  = open("./fixtures/in_put.yml","r")
         o_f  = open("./fixtures/out_put.txt","r")
         iv_f = open("./fixtures/some_iv.txt","r")
-        self.key_val  = k_f.read()
+        self.key_val  = k_f.read().rstrip('\n')
         k_f.close()
         self.in_data  = i_f.read()
         i_f.close()
         self.out_data = o_f.read()
         o_f.close()
-        self.iv_val = iv_f.read()
+        self.iv_val = iv_f.read().rstrip('\n')
         iv_f.close()
 
     def test_should_enc_and_dec_be_inverses(self):
