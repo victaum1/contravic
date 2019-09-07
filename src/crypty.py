@@ -22,7 +22,19 @@ def encrypt(key,data,_iv = None):
   result = json.dumps({'iv':iv, 'ciphertext':ct})
   return result
 
-# Decrypting...
+# Decrypting  
 def decrypt(key,data):
-    pt = ""
-    return pt
+  pt = ""
+  try:
+    _key  = pad(bytes(key.encode('utf-8')), AES.block_size)
+    b64 = json.loads(data)
+    iv = b64decode(b64['iv'])
+    ct = b64decode(b64['ciphertext'])
+    cipher = AES.new(_key, AES.MODE_CBC, iv)
+    pt = unpad(cipher.decrypt(ct), AES.block_size)
+    pt = pt.decode('utf-8')
+  except (Exception):
+    print("Incorrect decryption")
+    print (Exception.msg) 
+  return pt
+

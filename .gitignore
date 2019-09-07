@@ -106,3 +106,6 @@ share/
 
 # mypy
 .mypy_cache/
+
+# vim temps
+*.swp
