@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
-import sys
+#import sys
 
 def main():
-   return None
+  pass
+
 if __name__ == "__main__":
     main()

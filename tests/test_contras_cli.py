@@ -1,7 +1,6 @@
 # coding: utf-8
 # testin main: contras_cli
 
-
 from unittest import TestCase, skip
 from unittest.mock import patch
 import sys
@@ -9,13 +8,27 @@ import sys
 sys.path.append("../src")
 import contras_cli as cli
 
-
 # Testing cli
 class TestMain(TestCase):
+    inputs = []
+    outputs = []
+
+    def input_f(val=''):
+      ins = TestMain.inputs
+      ots = TestMain.outputs
+      ots.append(val)
+      if len(ots) != 0:
+        return ins.pop(0)
+      return None
+
+#      def print_f(val=''):
+#        TestMain.outputs.append(val)
+#        return None
 
     @classmethod
     def setUpClass(self):
-        pass
+      self.inputs = TestMain.inputs
+      self.outputs = TestMain.outputs
 
     def setUp(self):
         pass
@@ -24,16 +37,19 @@ class TestMain(TestCase):
     def test_input_file_found():
         pass
 
-    def test_imput_file_not_found(self):
-        patch_input = patch.object(cli,'input')
-        patch_input.start()
-        patch_isfile = patch('os.path.isfile',
-          return_value=False)
-        patch_isfile.start()
-        self.assertRaises(SystemExit, cli.main)
-        patch_isfile.stop()
-        patch_input.stop()
-
+    @patch.object(cli,'input', side_effect = input_f)
+    @patch('os.path.isfile', return_value=False)
+    def test_input_file_not_found(self, mock_isfile, mock_input):
+        infile = "somefile.txt"
+        self.inputs.append(infile)
+        self.inputs.append('')
+        with self.assertRaises(SystemExit) as cm:
+          cli.main()
+        self.assertEqual("File not found!",str(cm.exception))
+        mock_isfile.assert_called_with(infile)
+        self.assertEqual(self.outputs, ['Input file name to process it: ',
+            ''])
+    
     @skip("Not ready")
     def test_encrypting_ok():
         pass
@@ -45,7 +61,9 @@ class TestMain(TestCase):
         pass
 
     def tearDown(self):
-        pass
+        self.inputs.clear()
+        self.outputs.clear()
+
 
     @classmethod
     def tearDownClass(self):
