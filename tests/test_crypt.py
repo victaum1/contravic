@@ -1,10 +1,8 @@
 # coding: utf-8
 # testin Crypty Module
 
-#from mockito import mock, verify
 import unittest
 import sys
-# import json
 
 sys.path.append("../src")
 
