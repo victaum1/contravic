@@ -1,0 +1,28 @@
+PLan de desarrollo de contras-cli
+=================================
+
+Historia de usuario 1:
+
+Se pregunta al usuario si cargar una base de datos o crear una en memoria:
+
+-- se crea una nueva
+
+Se pregunta al usuario los nuevos campos:
+
+ - Cuenta
+ - Usuario:
+  - Nombre
+  - Contraseña
+
+Se pregunta al usuario si crear nueva cuenta y/o nuevo usuario o salir
+
+-- se sale
+
+Se pregunta al usuario si encriptar  o no la base de datos:
+
+-- no encripta
+-- se sale
+  
+Resultado:
+Una nueva Base de datos aparece en disco tipo "db.json" con los campos adecuados.
+

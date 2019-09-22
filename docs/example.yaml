@@ -1,0 +1,18 @@
+_default:
+        1:
+                AcountName: 'FICS'
+                Users: [{Name: 'tal', PassWord: "tal1234" }]
+                ThirdPartyAcount: ["chess.com"]
+                ReferencedAcount: ["gmail.com"]
+
+        2:
+                AcountName: "Theta Music Trainer"
+                Users: [{Name: 'vivaldi', PassWord: "Vivaldi1234" }]
+                ThirdPartyAcount: ["MusicScore"]
+                ReferencedAcount: ["yahoo.mail.com"]
+
+        3:
+                AcountName: 'Lycos'
+                Users: [{Name: 'martel', PassWord: "martel1234" }]
+                ThirdPartyAcount: ["Twitter.com"]
+                ReferencedAcount: ["hotmail.com"]
