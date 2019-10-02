@@ -2,10 +2,16 @@
 #import os.path as os_path
 #import sys
 #import crypty as cpt
-#import getpass as gpw
+import getpass as gpw
+import json
 
-def create_user(name):
+db_name = "db"
+db_encrypted = db_name+".enc"
+
+def create_user(name, password):
     new_user = {}
+    new_user["Name"] = name
+    new_user["PassWord"] = password
     return new_user
 
 def create_users():
@@ -13,52 +19,62 @@ def create_users():
     return users
 
 def load_db(file_name=None, pass_frase=None):
-    new_db = []
+    new_db = None
+    if (file_name==None):
+      new_db = []
+    else:
+        pass
     return new_db
 
 def save_db(db, pass_frase=""):
+    if pass_frase == "":
+      with open(db_name + ".json","w") as of:
+        of.write(json.dumps(db)+"\n")
+    else:
+      pass
     pass
 
-def create_entry(account=""):
+def create_entry(account):
     new_entry = {}
+    new_entry["Account"] = account
+    new_entry["Users"] = []
     return new_entry
 
 def account_add_usr(account, user):
-    #account["Users"].append(user)
+    account["Users"].append(user)
     pass
 
-def user_set_name(user, name):
-    #user["Name"] = name
-    pass
-
-def user_set_psw(user, psw):
-    #user["PassWord"]=psw
-    pass
+def db_add_account(db, account):
+    db.append(account)
 
 def main():
+
     db = None
-    std_db = "db"
-    db_encrypted =std_db+".enc"
     
     opt = input("Crear nueva DB o cargarla? (N/C): ")
 
     if (opt == "N"):
         print("Creando nueva DB...")
         db = load_db()
-        print("Creando nueva entrada...") 
-        account = input("Nombre de la cuenta: ")
-        account = create_entry(account)
-        usr_name = input("Nombre de usuario: ")
-        user = create_user(usr_name)
-        password  = input("Contraseña: ")
-        password = user_set_psw(user, password)
-
-    opt = input("Crear otra cuenta? (S/N): ")
+        opt = "S"
+        while True:
+          print("Creando nueva entrada...") 
+          account = input("Nombre de la cuenta: ")
+          account = create_entry(account)
+          usr_name = input("Nombre de usuario: ")
+          password  = gpw.getpass("Contraseña: ")
+          user = create_user(usr_name, password)
+          account_add_usr(account,user)
+          db_add_account(db, account)
+          opt = input("Crear otra cuenta? (S/N): ")
+          if opt != "S":
+              break
+          pass
 
     if (opt == "N"):
         opt = input("Encriptar DB? (S/N): ")
         if (opt == "N"):
-            safe_db(data)
+            save_db(db)
         else:
             # TODO
           pass

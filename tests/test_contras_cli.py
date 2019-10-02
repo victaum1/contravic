@@ -1,6 +1,7 @@
 # coding: utf-8
 # testin main: contras_cli
 import os
+import os.path as path
 import unittest
 from unittest import TestCase, skip
 from unittest.mock import patch, Mock, call
@@ -26,15 +27,15 @@ class TestMain(TestCase):
         pass
 
     def setUp(self):
-        os.system("touch ../src/db.json")
+        pass
 
     def test_user_happy_path_1(self):
         ins = [
               "N",
-              "Cuenta 1"
+              "Cuenta 1",
               "Usuario 1",
               "Contra 1",
-              "S",
+              "N",
               "N",
               ]
         ots = []
@@ -48,7 +49,9 @@ class TestMain(TestCase):
               "Crear otra cuenta? (S/N): ",
               "Encriptar DB? (S/N): ",
               ]
-        spec_ofile = "db.json"
+        spec_ofile = "spec_db.json"
+        ofile = "db.json"
+        data = ""
         
         def input_f(val=None):
             ots.append(val)
@@ -64,19 +67,23 @@ class TestMain(TestCase):
         m_input.side_effect = input_f
         m_output = self.create_patch('print',obj=cli)
         m_output.side_effect = print_f
+        m_getpass = self.create_patch('getpass', obj=cli.gpw)
+        m_getpass.side_effect = input_f
+
         cli.main()
 
         with open('fixtures/'+spec_ofile) as f:
             spec_data = f.read()
-        
-        with open("../src/"+spec_ofile) as f:
-            data = f.read()
+
+        if path.isfile(ofile):
+          with open(ofile) as f:
+              data = f.read()
 
         self.assertEqual(ots,spec_ots)
         self.assertEqual(spec_data, data)
 
     def tearDown(self):
-        os.system("rm ../src/db.json")
+        os.system("rm db.json")
 
     @classmethod
     def tearDownClass(self):
