@@ -28,8 +28,9 @@ def load_db(file_name=None, pass_frase=None):
 
 def save_db(db, pass_frase=""):
     if pass_frase == "":
-      with open(db_name + ".json","w") as of:
+        of = open(db_name + ".json","w")
         of.write(json.dumps(db)+"\n")
+        of.close()
     else:
       pass
     pass

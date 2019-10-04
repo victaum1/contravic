@@ -1,10 +1,10 @@
 # coding: utf-8
-# testin main: contras_cli
+# testing main: contras_cli
 import os
 import os.path as path
 import unittest
 from unittest import TestCase, skip
-from unittest.mock import patch, Mock, call
+from unittest.mock import patch, MagicMock, call
 import sys
 
 sys.path.append("../src")
@@ -62,7 +62,9 @@ class TestMain(TestCase):
         def print_f(val='\n'):
             ots.append(val)
             return None
-        
+        m_r_open = MagicMock()
+        m_open = self.create_patch('open', obj=cli)
+        m_open.side_effect = [m_r_open]
         m_input = self.create_patch('input',obj=cli)
         m_input.side_effect = input_f
         m_output = self.create_patch('print',obj=cli)
@@ -75,15 +77,12 @@ class TestMain(TestCase):
         with open('fixtures/'+spec_ofile) as f:
             spec_data = f.read()
 
-        if path.isfile(ofile):
-          with open(ofile) as f:
-              data = f.read()
-
         self.assertEqual(ots,spec_ots)
-        self.assertEqual(spec_data, data)
+        m_r_open.write.assert_called_with(spec_data)
+        m_r_open.close.assert_called()
 
     def tearDown(self):
-        os.system("rm db.json")
+        pass
 
     @classmethod
     def tearDownClass(self):
