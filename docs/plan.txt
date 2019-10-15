@@ -1,28 +1,107 @@
-PLan de desarrollo de contras-cli
+Plan de desarrollo de contras-cli
 =================================
 
 Historia de usuario 1:
 
-Se pregunta al usuario si cargar una base de datos o crear una en memoria:
+1) Se pregunta al usuario si cargar una base de datos o crear una en
+memoria:
 
--- se crea una nueva
+-- se crea una nueva en memoria
 
-Se pregunta al usuario los nuevos campos:
+2) Se pregunta al usuario los nuevos campos:
 
  - Cuenta
  - Usuario:
   - Nombre
   - Contraseña
 
-Se pregunta al usuario si crear nueva cuenta y/o nuevo usuario o salir
+3) Se pregunta al usuario si crear nueva cuenta y/o nuevo usuario o salir
 
 -- se sale
 
-Se pregunta al usuario si encriptar  o no la base de datos:
+4) Se pregunta al usuario si encriptar o no la base de datos:
 
--- no encripta
--- se sale
+-- no encripta, se sale
   
 Resultado:
-Una nueva Base de datos aparece en disco tipo "db.json" con los campos adecuados.
+Una nueva Base de datos aparece en disco tipo "db.json" con los campos
+adecuados.
+---------------------------------------------------------------------------
 
+Historia de usuario 2:
+
+1) Se continua con el punto 1 de la historia de usuario 1: 
+
+-- se decide cargar una base de datos.
+
+2) Se pregunta el nombre de la base de datos:
+
+-- el programa carga y muestra las primeras entradas paginadas. (interacción
+ con paginador).
+
+3) Se pregunta si extraer contraseña de una cuenta o salir:
+
+-- se sale
+
+4) Se pregunta si encriptar la base de datos o salir
+
+-- se decide encriptar
+
+5) Se pregunta la contra para encriptar:
+
+-- se escribe la contra, se sale.
+
+Resultado:
+
+Una base de datos en disco encriptada "db.enc".
+--------------------------------------------------------------------------
+
+Historia de usuario 3:
+
+1) Se continua con el punto 2 de la historia de usuario 2:
+
+-- La base de datos está encriptada.
+
+2) Se pregunta contra para desbloquear la base:
+
+-- se escribe la contra.
+
+3) Si la contra es correcta se muestra el paginador. Se pregunta si extraer 
+una contra de una cuenta.
+
+-- se decide extraer.
+
+4) Se muestra la contra. Se pregunta si continuar o salir:
+
+-- se sale.
+
+Resultado:
+No hay cambios en la "db".
+---------------------------------------------------------------------------
+
+Historia de usuario 4:
+
+1) Se continua con el punto 3 de la historia de usuario 3:
+
+-- se escribe la contra
+
+2) Se pregunta si extraer una contra o actualizar:
+
+-- se decide actualizar:
+
+3) Se muestran un campo para buscar el usuario:
+
+-- se escribe un usuario.
+
+4) Se pregunta por la nueva contra:
+
+-- se escribe la actualización.
+
+5) Se pregunta si continuar o salir:
+
+-- se sale.
+
+Resultado:
+Se sobre-escribe el archivo "db.enc" con los nuevos datos actualizados y
+encriptados.
+---------------------------------------------------------------------------
