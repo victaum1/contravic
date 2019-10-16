@@ -1,14 +1,19 @@
 # coding: utf-8
-# testin Crypty Module
+"""
+ testing Crypty Module
+"""
 
 import unittest
 import sys
 
 sys.path.append("../src")
-
 from crypty import encrypt, decrypt
 
-# Testing Encrypting - Decrypt...
+"""
+Testing Encrypting - Decrypt...
+"""
+
+
 class TestCrypto(unittest.TestCase):
 
     @classmethod
@@ -27,19 +32,18 @@ class TestCrypto(unittest.TestCase):
         iv_f.close()
 
     def test_should_enc_and_dec_be_inverses(self):
-        self.assertEqual(self.in_data,decrypt(self.key_val,
-          encrypt(self.key_val,self.in_data)))
+        self.assertEqual(self.in_data, decrypt(self.key_val,
+          encrypt(self.key_val, self.in_data)))
 
     def test_should_enc_be_aes(self):
         in_dat = self.in_data
         ou_dat = self.out_data
         _key   = self.key_val
         _iv    = self.iv_val
-        self.assertEqual(ou_dat,encrypt(_key,in_dat,_iv)) 
+        self.assertEqual(ou_dat, encrypt(_key, in_dat, _iv))
 
     def test_should_dec_be_aes(self):
         in_dat = self.in_data
         ou_dat = self.out_data
         _key   = self.key_val
-        self.assertEqual(in_dat,decrypt(_key,ou_dat)) 
-        
+        self.assertEqual(in_dat, decrypt(_key, ou_dat))
