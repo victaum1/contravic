@@ -1,6 +1,6 @@
 # coding: utf-8
 # testing main: contras_cli
-import unittest
+from unittest import main
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 import sys
@@ -95,6 +95,7 @@ class TestMain(TestCase):
             "Crear nueva DB o cargarla? (N/C): ",
             "Nombre de archivo para DB: ",
             "- Cuenta 1",
+            "- ...",
             "Extraer contra o salir? (E/S): ",
             "Encriptar DB? (S/N): ",
             "Contraseña: "
@@ -142,4 +143,4 @@ class TestMain(TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

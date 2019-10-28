@@ -91,6 +91,9 @@ def main():
     if opt == "C":
         db_name = input("Nombre de archivo para DB: ")
         d_b = load_db(db_name)
+        cad = d_b[0]['Account']
+        print('- ' + cad)
+        print('- ...')
         opt = input("Extraer contra o salir? (E/S): ")
         if opt == "E":
             pass
