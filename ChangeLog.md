@@ -1,5 +1,10 @@
 # Revision history for contravic
 
+## 0.7.0 -- 2019-10-28
+
+* Testing User Cases 1 and 2 passed! 
+----------------------------------
+
 ## 0.5.0 -- 2019-10-02
 
 * Testing database saving. Passed! 
