@@ -2,8 +2,9 @@
 # testing main: contras_cli
 from unittest import main
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, Mock
 import sys
+#import pdb
 
 
 sys.path.append("../src")
@@ -37,8 +38,7 @@ class TestMain(TestCase):
               "Usuario 1",
               "Contra 1",
               "N",
-              "N",
-              ]
+              "N"]
         ots = []
         spec_ots = [
               "Crear nueva DB o cargarla? (N/C): ",
@@ -51,6 +51,7 @@ class TestMain(TestCase):
               "Encriptar DB? (S/N): ",
               ]
         spec_ofile = "spec_db.json"
+        ofile = "db.json"
 
         def input_f(val=None):
             ots.append(val)
@@ -62,7 +63,10 @@ class TestMain(TestCase):
             ots.append(val)
             return None
 
-        m_r_open = MagicMock()
+        with open('fixtures/'+spec_ofile) as f:
+            spec_data = f.read()
+
+        m_r_open = Mock()
         m_open = self.create_patch('open', obj=cli)
         m_open.side_effect = [m_r_open]
         m_input = self.create_patch('input', obj=cli)
@@ -74,10 +78,8 @@ class TestMain(TestCase):
 
         cli.main()
 
-        with open('fixtures/'+spec_ofile) as f:
-            spec_data = f.read()
-
         self.assertEqual(ots, spec_ots)
+        m_open.assert_called_with(ofile, 'w')
         m_r_open.write.assert_called_with(spec_data)
         m_r_open.close.assert_called()
 
@@ -87,7 +89,7 @@ class TestMain(TestCase):
             "C",
             "db",
             "S",
-            "S",
+            "E",
             contra
               ]
         ots = []
@@ -100,8 +102,10 @@ class TestMain(TestCase):
             "Encriptar DB? (S/N): ",
             "Contraseña: "
         ]
-        spec_ofile = "spec_db.enc"
-        ofile = "db.enc"
+        spec_ifile = "spec_db.json"
+        spec_ofile = "spec_db_enc.json"
+        ifile = "db.json"
+        ofile = "db_enc.json"
 
         def input_f(val=None):
             ots.append(val)
@@ -113,6 +117,15 @@ class TestMain(TestCase):
             ots.append(val)
             return None
 
+        with open('fixtures/'+spec_ifile) as f:
+            spec_idata = f.read()
+        with open('fixtures/'+spec_ofile) as f:
+            spec_odata = f.read()
+
+        m_r_open = Mock()
+        m_r_open.read.side_effect = [spec_idata]
+        m_open = self.create_patch('open', obj=cli)
+        m_open.return_value = m_r_open
         m_input = self.create_patch('input', obj=cli)
         m_input.side_effect = input_f
         m_output = self.create_patch('print', obj=cli)
@@ -122,17 +135,65 @@ class TestMain(TestCase):
 
         cli.main()
 
-        with open('fixtures/'+spec_ofile) as f:
-            spec_data = f.read()
-
-        with open(ofile) as f:
-            data = f.read()
-
+        data = m_r_open.write.call_args.args
         data = decrypt(contra, data)
-        spec_data = decrypt(contra, spec_data)
+        spec_odata = decrypt(contra, spec_odata)
 
+        m_open.assert_called_with(ifile)
+        m_open.assert_called_with(ofile)
         self.assertEqual(ots, spec_ots)
-        self.assertEqual(data, spec_data)
+        self.assertEqual(data, spec_odata)
+
+    def test_user_happy_path_3(self):
+        contra = "Contra 1"
+        ins = [
+            "C",
+            "db_enc",
+            contra,
+            "E",
+            "S"]
+        ots = []
+        spec_ots = [
+            "Crear nueva DB o cargarla? (N/C): ",
+            "La BD está encriptada.",
+            "Contra para desbloquar: ",
+            "- Cuenta 1 ...",
+            "- ...",
+            "Contra 1",
+            "Continuar o salir (C/S): "]
+        spec_ifile = "spec_db_enc.json"
+        ifile = "db_enc.json"
+
+        def input_f(val=None):
+            ots.append(val)
+            if len(ins) != 0:
+                return ins.pop(0)
+            return None
+
+        def print_f(val='\n'):
+            ots.append(val)
+            return None
+
+        with open('fixtures/'+spec_ifile) as f:
+            spec_idata = f.read()
+
+        m_r_open = Mock()
+
+        m_r_open.read.side_effect = [spec_idata]
+        m_open = self.create_patch('open', obj=cli)
+        m_open.side_effect = [m_r_open]
+        m_input = self.create_patch('input', obj=cli)
+        m_input.side_effect = input_f
+        m_output = self.create_patch('print', obj=cli)
+        m_output.side_effect = print_f
+        m_getpass = self.create_patch('getpass', obj=cli.gpw)
+        m_getpass.side_effect = input_f
+
+        cli.main()
+
+        m_open.assert_called_with(ifile)
+        m_r_open.read.assert_called()
+        self.assertEqual(ots, spec_ots)
 
     def tearDown(self):
         pass

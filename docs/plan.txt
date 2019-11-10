@@ -53,7 +53,7 @@ Historia de usuario 2:
 
 Resultado:
 
-Una base de datos en disco encriptada "db.enc".
+Una base de datos en disco encriptada "db_enc".
 --------------------------------------------------------------------------
 
 Historia de usuario 3:

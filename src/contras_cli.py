@@ -30,12 +30,13 @@ def load_db(file_name=None, pass_frase=None):
         new_db = []
     else:
         if pass_frase is None:
-            with open(file_name + ".json") as f:
-                cad = f.read()
+            f = open(file_name + ".json")
+            cad = f.read()
             new_db = json.loads(cad)
         else:
-            with open(file_name + ".enc") as f:
-                cad = f.read()
+            f = open(file_name + "_enc.json")
+            cad = f.read()
+            f.close()
             new_db = json.loads(cpy.decrypt(pass_frase, cad))
     return new_db
 
@@ -46,10 +47,10 @@ def save_db(db, pass_frase=""):
         o_f.write(json.dumps(db)+"\n")
         o_f.close()
     else:
-        o_f = open(db_name + ".enc", "w")
+        o_f = open(db_name + "_enc.json", "w")
         out = json.dumps(db)+"\n"
         out = cpy.encrypt(pass_frase, out)
-        o_f.write(out + "\n") 
+        o_f.write(out + "\n")
         o_f.close()
 
 
