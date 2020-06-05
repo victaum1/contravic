@@ -1,3 +1,46 @@
+----------------------------------------------------------------------------
+lang EN:
+----------------------------------------------------------------------------
+Personal password management program "ContraVic"
+
+
+VER 0.9.0
+
+Then it must be able to Create, Read, Update and Destroy records of the
+Text file. The decrypted text file should be in the memory. The encrypted text
+file would go to the disk where it can be recovered. Password recovery can be
+explicit. It should try to place it on the clipboard silently.
+
+
+VER 1.0.1
+
+In this iteration the functions on the command-line must be easily managed.
+
+
+VER ----
+
+When closing the text file in memory the memory must be filled
+busy randomly.
+
+When extracting a password from the database it should remain in the
+clipboard ready to be used by another application.
+
+When closing the application the clipboard should be cleaned or filled with text
+random.
+
+VER> 2.0.1
+
+In the end, a GUI-type application for handling
+passwords.
+
+...
+
+VER 0.1.0
+
+Initially the program should simply encrypt a text file of
+passwords. (Done, see: 0.2.0)
+
+----------------------------------------------------------------------------
 lang ES:
 ----------------------------------------------------------------------------
 Programa personal de manejo de contraseñas "ContraVic"
@@ -34,8 +77,3 @@ VER > 2.0.1
 
 Al final se debe acabar con una aplicación tipo GUI para el manejo de
 contraseñas.
-----------------------------------------------------------------------------
-lang EN:
-
-----------------------------------------------------------------------------
-
