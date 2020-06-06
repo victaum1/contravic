@@ -1,49 +1,28 @@
 # coding: utf-8
+
 """
- testing Crypty Module
+ Testing Crypty Module
 """
 
-import unittest
+import pytest
 import sys
 
 sys.path.append("../src")
+
 from crypty import encrypt, decrypt
 
+
 """
-Testing Encrypting - Decrypt...
+  Testing Encrypting - Decrypt
 """
 
+def test_should_enc_be_aes(in_data, key, iv, out_data):
+    assert out_data == encrypt(key,in_data,iv)
 
-class TestCrypto(unittest.TestCase):
+def test_should_dec_be_aes(in_data, key, out_data):
+    assert in_data == decrypt(key,out_data)
+    
 
-    @classmethod
-    def setUpClass(self):
-        k_f  = open("./fixtures/some_key.txt","r")
-        i_f  = open("./fixtures/in_put.yml","r")
-        o_f  = open("./fixtures/out_put.txt","r")
-        iv_f = open("./fixtures/some_iv.txt","r")
-        self.key_val  = k_f.read().rstrip('\n')
-        k_f.close()
-        self.in_data  = i_f.read()
-        i_f.close()
-        self.out_data = o_f.read()
-        o_f.close()
-        self.iv_val = iv_f.read().rstrip('\n')
-        iv_f.close()
+def test_should_enc_and_dec_be_inverses(in_data, key):
+    assert in_data == decrypt(key,encrypt(key,in_data))
 
-    def test_should_enc_and_dec_be_inverses(self):
-        self.assertEqual(self.in_data, decrypt(self.key_val,
-          encrypt(self.key_val, self.in_data)))
-
-    def test_should_enc_be_aes(self):
-        in_dat = self.in_data
-        ou_dat = self.out_data
-        _key   = self.key_val
-        _iv    = self.iv_val
-        self.assertEqual(ou_dat, encrypt(_key, in_dat, _iv))
-
-    def test_should_dec_be_aes(self):
-        in_dat = self.in_data
-        ou_dat = self.out_data
-        _key   = self.key_val
-        self.assertEqual(in_dat, decrypt(_key, ou_dat))
