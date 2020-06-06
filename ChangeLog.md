@@ -1,5 +1,10 @@
 # Revision history for contravic
 
+## 0.7.0 -- 2020-06-05
+
+* Changing unittest framework for pytest! 
+----------------------------------
+
 ## 0.7.0 -- 2019-10-28
 
 * Testing User Cases 1 and 2 passed! 
