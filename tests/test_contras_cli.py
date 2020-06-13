@@ -68,9 +68,9 @@ def test_usr_happy_path_1(inputs, out_fn, out_db, spec_out):
 
 
     assert outputs == so
-    assert open_was_called[0] 
-    assert write_was_called
-    assert close_was_called
+    assert open_was_called[0] == True 
+    assert write_was_called[0] == True
+    assert close_was_called[0] == True
     assert open_args[0] == (ofn,'w')
     assert write_cads[0] == odb 
 
