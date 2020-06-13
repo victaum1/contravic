@@ -30,3 +30,40 @@ def iv():
     v_f.close()
     return v_dat
 
+@pytest.fixture
+def inputs():
+    return [
+            "N",
+            "Cuenta 1",
+            "Usuario 1",
+            "Contra 1",
+            "N",
+            "N"
+           ]
+
+@pytest.fixture
+def spec_out():
+    return [
+  "Crear nueva DB o cargarla? (N/C): ",
+  "Creando nueva DB...",
+  "Creando nueva entrada...",
+  "Nombre de la cuenta: ",
+  "Nombre de usuario: ",
+  "Contraseña: ",
+  "Crear otra cuenta? (S/N): ",
+  "Encriptar DB? (S/N): ",
+              ]
+
+
+@pytest.fixture
+def out_fn():
+    return "db.json"
+
+@pytest.fixture
+def out_db():
+    i_f = open("fixtures/spec_db.json")
+    i_dat = i_f.read()
+    i_f.close()
+    return i_dat
+
+
