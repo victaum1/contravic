@@ -9,13 +9,13 @@ their own version. After all it is personal information. In the level of a
 normal competent programmer, should have the expertise and knowledge to be able
 to realize this kind of a project.
 
-* version 0.4.0: the versioning will be the one in 
+* version 0.8.0: the versioning will be the one in 
 (https://semver.org/)
 
 ### How to get setup? ###
 
 * Summary of set up:
-The language to be used for the implementation will be python version 3.6.8. It
+The language to be used for the implementation will be python version 0.8.0. It
 is recommended to use a virtual environment like "virtualenv" or similar. For
 the building could be used "pybuilder" or something similar.
 

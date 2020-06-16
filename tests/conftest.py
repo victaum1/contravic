@@ -34,30 +34,33 @@ def iv():
 def inputs():
     return [
             "N",
-            "Cuenta 1",
-            "Usuario 1",
-            "Contra 1",
+            '"Cuenta 1"',
+            '"Usuario 1"',
+            '"Contra 1"',
+            "n",
+            "n",
             "N",
             "N"
            ]
 
 @pytest.fixture
-def spec_out():
+def spec_out_es():
     return [
   "Crear nueva DB o cargarla? (N/C): ",
   "Creando nueva DB...",
-  "Creando nueva entrada...",
-  "Nombre de la cuenta: ",
-  "Nombre de usuario: ",
-  "Contraseña: ",
-  "Crear otra cuenta? (S/N): ",
+  "Account?: ",
+  "Users: ",
+  "User?: ",
+  "PassWord?: ",
+  "Another [y/n]?: ",
+  "Another [y/n]?: ",
   "Encriptar DB? (S/N): ",
               ]
 
 
 @pytest.fixture
 def out_fn():
-    return "db.json"
+    return "myDB.json"
 
 @pytest.fixture
 def out_db():

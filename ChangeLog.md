@@ -1,6 +1,11 @@
 # Revision history for contravic
 
-## 0.7.0 -- 2020-06-05
+## 0.8.0 -- 2020-06-15
+
+*  DataBase Management
+----------------------------------
+
+## 0.7.1 -- 2020-06-05
 
 * Changing unittest framework for pytest! 
 ----------------------------------

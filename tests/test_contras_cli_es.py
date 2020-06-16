@@ -10,14 +10,8 @@ import contras_cli as cli
 from crypty import encrypt, decrypt
 
 @pytest.mark.happy
-def test_usr_happy_path_1(inputs, out_fn, out_db, spec_out):
-    its = inputs
-    ofn = out_fn
-    odb = out_db 
-    so = spec_out 
-    
+def test_usr_happy_path_1(inputs, out_fn, out_db, spec_out_es):
     outputs = []
-
     open_args = []
     open_was_called = [False]
     write_was_called = [False]
@@ -55,11 +49,12 @@ def test_usr_happy_path_1(inputs, out_fn, out_db, spec_out):
 
     def mock_input(s):
         outputs.append(s)
-        return its.pop(0)
+        return inputs.pop(0)
 
 
     cli.input = mock_input
     cli.gpw.getpass = mock_input
+    cli.DB.read_prompt = mock_input
     cli.print = lambda s : outputs.append(s)
     cli.open = mock_open
 
@@ -67,10 +62,10 @@ def test_usr_happy_path_1(inputs, out_fn, out_db, spec_out):
     cli.main()
 
 
-    assert outputs == so
+    assert outputs == spec_out_es
     assert open_was_called[0] == True 
     assert write_was_called[0] == True
     assert close_was_called[0] == True
-    assert open_args[0] == (ofn,'w')
-    assert write_cads[0] == odb 
+    assert open_args[0] == (out_fn,'w+')
+    assert write_cads[0] == out_db 
 
