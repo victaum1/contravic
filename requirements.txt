@@ -1,3 +1,4 @@
 pycryptodomex
 pyinotify
 pytest
+pytest-cov
