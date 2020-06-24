@@ -2,16 +2,19 @@ import pytest
 
 @pytest.fixture
 def in_data():
+    i_dat = []
     i_f = open("fixtures/input.yml")
-    i_dat = i_f.read()
+    i_dat.append(i_f.read())
     i_f.close()
+
     return i_dat
 
 
 @pytest.fixture
 def out_data():
+    o_dat = []
     o_f = open("./fixtures/out_put.txt")
-    o_dat = o_f.read()
+    o_dat.append(o_f.read())
     o_f.close()
     return o_dat
 
@@ -32,7 +35,7 @@ def iv():
 
 @pytest.fixture
 def inputs():
-    return [
+    return [[
             "N",
             '"Cuenta 1"',
             '"Usuario 1"',
@@ -41,11 +44,12 @@ def inputs():
             "n",
             "N",
             "N"
-           ]
+           ],
+           []]
 
 @pytest.fixture
 def spec_out_es():
-    return [
+    return [[
   "Crear nueva DB o cargarla? (N/C): ",
   "Creando nueva DB...",
   "Account?: ",
@@ -55,18 +59,21 @@ def spec_out_es():
   "Another [y/n]?: ",
   "Another [y/n]?: ",
   "Encriptar DB? (S/N): ",
-              ]
+           ],
+           [],[],[]
+           ]
 
 
 @pytest.fixture
 def out_fn():
-    return "myDB.json"
+    return ["myDB.json"]
+
 
 @pytest.fixture
 def out_db():
+    o_db = []
     i_f = open("fixtures/spec_db.json")
-    i_dat = i_f.read()
+    o_db.append(i_f.read())
     i_f.close()
-    return i_dat
-
+    return o_db
 
