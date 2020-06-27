@@ -15,6 +15,15 @@ from Db_template import customDB
 
 db_name = "myDB"
 
+def my_print(cad):
+    print(cad)
+
+
+def my_input(cad):
+    res = input(cad)
+    return res
+
+
 def is_valid_input(inp):
     jval = '{ "val": ' + '['+inp+']' + ' }'
     try:
@@ -36,8 +45,8 @@ def dump(db):
     for record in db:
         for f in list(record):
             v = record[f]
-            print("{}:  {}".format(f,v))
-        print("\n")
+            my_print("{}:  {}".format(f,v))
+        my_print("\n")
 
 
 def read_prompt(prompt=None):
@@ -45,8 +54,9 @@ def read_prompt(prompt=None):
         read_prompt("continue/exit): ")
         return None
     else:
-        val = input("{}?: ".format(prompt))
+        val = my_input("{}?: ".format(prompt))
         return val
+
 
 def check_input(key):
     while True:
@@ -54,7 +64,7 @@ def check_input(key):
         if is_valid_input(cad):
             break
         else:
-            print("Invalid input...")
+            my_print("Invalid input...")
     return cad
 
 
@@ -75,7 +85,7 @@ def save(db,file_name=None):
         Fd.write(json.dumps(db)+"\n")
         Fd.close()
     else:
-        Fd = open(file_name+".json","a+")
+        Fd = open(file_name+".json","w+")
         Fd.write(json.dumps(db)+"\n")
         Fd.close()
 
@@ -88,7 +98,7 @@ def load(file_name=None):
         Fd.close()
         return db
     else:
-        Fd = open(file_name+".json","r+")
+        Fd = open(file_name+".json","r")
         db = Fd.read()
         db = json.loads(db)
         Fd.close()
@@ -102,7 +112,7 @@ def read_record(rd_temp=None):
     else:
         for key in rd_temp.keys():
             if type(rd_temp[key]) is type([]):
-                print("{}: ".format(key))
+                my_print("{}: ".format(key))
                 rd[key] = read(rd_temp[key])
             else:
                 val = check_input(key)
@@ -131,37 +141,38 @@ def save_db(db,file_Name=None,pass_frase=None):
     if pass_frase is None:
         save(db,file_Name)
     else:
-        o_f = open(db_name + "_enc.json", "w")
+        o_f = open(db_name + "_enc.json", "w+")
         out = json.dumps(db)+"\n"
         out = cpy.encrypt(pass_frase, out)
         o_f.write(out + "\n")
         o_f.close()
 
+
 def main():
     d_b = None
-    opt = input("Crear nueva DB o cargarla? (N/C): ")
+    opt = my_input("Crear nueva DB o cargarla? (N/C): ")
 
     if opt == "N":
-        print("Creando nueva DB...")
+        my_print("Creando nueva DB...")
         d_b = new_db()
 
     if opt == "C":
-        db_name = input("Nombre de archivo para DB: ")
+        db_name = my_input("Nombre de archivo para DB: ")
         d_b = load_db(db_name)
         dump(d_b)
-        opt = input("Extraer contra o salir? (E/S): ")
+        opt = my_input("Extraer contra o salir? (E/S): ")
         if opt == "E":
             pass
         if opt == "S":
             pass
 
-    opt = input("Encriptar DB? (S/N): ")
+    opt = my_input("Encriptar DB? (S/N): ")
 
     if opt == "N":
         save_db(d_b)
     if opt == "S":
         pass_frase = gpw.getpass("Contraseña: ")
-        save_db(d_b, pass_frase)
+        save_db(d_b, pass_frase=pass_frase)
 
 
 if __name__ == "__main__":

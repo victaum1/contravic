@@ -1,7 +1,6 @@
 # from copy import copy
 
 class MockInOut:
-    outputs = []
 
     def print(self,s):
         MockInOut.outputs.append(s)
@@ -24,11 +23,11 @@ class FD:
 
 class FDR(FD):
     def __init__(self,ins):
-        self.input_cads = ins
+        self.input_cad = ins
 
     def read(self):
         MockOpen.read_called = True
-        return self.input_cads.pop(0)
+        return self.input_cad
 
 
 class FDW(FD):
@@ -38,24 +37,21 @@ class FDW(FD):
 
 
 class MockOpen:
-    args = []
-    called = False
-    read_called = False
-    write_called = False
-    close_called = False
-    out_cads = []
 
-    def __init__(self, i_cads=None):
-        if i_cads is None:
+    def __init__(self, i_cad=None):
+        if i_cad is None:
             pass
         else:
-            self.input_cads = i_cads
+            self.input_cad = i_cad
 
     def open(self, fileName, readMode=None):
       MockOpen.called = True
-      if readMode == None:
-          MockOpen.args.append((fileName,"r"))
-          return FDR(self.input_cads)
+      if (readMode == None) or (readMode == "r") or (readMode == "r+"):
+          if (readMode == None):
+              MockOpen.args.append((fileName,"r"))
+          else:
+              MockOpen.args.append((fileName,readMode))
+          return FDR(self.input_cad)
       else:
           MockOpen.args.append((fileName,readMode))
           return FDW()

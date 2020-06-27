@@ -1,36 +1,36 @@
 import pytest
 
+
 @pytest.fixture
 def in_data():
     i_dat = []
-    i_f = open("fixtures/input.yml")
-    i_dat.append(i_f.read())
-    i_f.close()
-
+    with open("fixtures/input.yml") as f:
+        i_dat.append(f.read())
+    with open("fixtures/spec_db.json") as f:
+        i_dat.append(f.read())
     return i_dat
 
 
 @pytest.fixture
 def out_data():
     o_dat = []
-    o_f = open("./fixtures/out_put.txt")
-    o_dat.append(o_f.read())
-    o_f.close()
+    with open("./fixtures/out_put.txt") as f:
+        o_dat.append(f.read())
+    with open("./fixtures/spec_db_enc.json") as f:
+        o_dat.append(f.read())
     return o_dat
 
 
 @pytest.fixture
 def key():
-    k_f = open("./fixtures/some_key.txt")
-    k_dat = k_f.read().rstrip('\n')
-    k_f.close()
+    with open("./fixtures/some_key.txt") as f:
+        k_dat = f.read().rstrip('\n')
     return k_dat
 
 @pytest.fixture
 def iv():
-    v_f = open("./fixtures/some_iv.txt")
-    v_dat = v_f.read().rstrip('\n')
-    v_f.close()
+    with open("./fixtures/some_iv.txt") as f:
+        v_dat = f.read().rstrip('\n')
     return v_dat
 
 @pytest.fixture
@@ -45,7 +45,14 @@ def inputs():
             "N",
             "N"
            ],
-           []]
+           [
+            "C",
+            "myDB",
+            "S",
+            "S",
+            "Contra 1"
+           ]
+           ]
 
 @pytest.fixture
 def spec_out_es():
@@ -60,20 +67,23 @@ def spec_out_es():
   "Another [y/n]?: ",
   "Encriptar DB? (S/N): ",
            ],
-           [],[],[]
-           ]
+           [
+  "Crear nueva DB o cargarla? (N/C): ",
+  "Nombre de archivo para DB: ",
+  "Account:  Cuenta 1",
+  "Users:  [{'User': 'Usuario 1', 'PassWord': 'Contra 1'}]",
+  "\n",
+  "Extraer contra o salir? (E/S): ",
+    "Encriptar DB? (S/N): ",
+  "Contraseña: "
+            ],[],[]]
 
 
 @pytest.fixture
 def out_fn():
-    return ["myDB.json"]
+    return [
+            "myDB.json",
+            "myDB_enc.json"
+            ]
 
-
-@pytest.fixture
-def out_db():
-    o_db = []
-    i_f = open("fixtures/spec_db.json")
-    o_db.append(i_f.read())
-    i_f.close()
-    return o_db
 
