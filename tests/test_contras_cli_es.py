@@ -1,4 +1,4 @@
-# coding utf-8
+# 
 # testin main: contras_cli
 
 import pytest

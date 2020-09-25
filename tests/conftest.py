@@ -1,12 +1,12 @@
+#
 import pytest
-
 
 @pytest.fixture
 def in_data():
     i_dat = []
-    with open("fixtures/input.yml") as f:
+    with open("tests/fixtures/input.yml") as f:
         i_dat.append(f.read())
-    with open("fixtures/spec_db.json") as f:
+    with open("tests/fixtures/spec_db.json") as f:
         i_dat.append(f.read())
     return i_dat
 
@@ -14,22 +14,22 @@ def in_data():
 @pytest.fixture
 def out_data():
     o_dat = []
-    with open("./fixtures/out_put.txt") as f:
+    with open("tests/fixtures/out_put.txt") as f:
         o_dat.append(f.read())
-    with open("./fixtures/spec_db_enc.json") as f:
+    with open("tests/fixtures/spec_db_enc.json") as f:
         o_dat.append(f.read())
     return o_dat
 
 
 @pytest.fixture
 def key():
-    with open("./fixtures/some_key.txt") as f:
+    with open("tests/fixtures/some_key.txt") as f:
         k_dat = f.read().rstrip('\n')
     return k_dat
 
 @pytest.fixture
 def iv():
-    with open("./fixtures/some_iv.txt") as f:
+    with open("tests/fixtures/some_iv.txt") as f:
         v_dat = f.read().rstrip('\n')
     return v_dat
 

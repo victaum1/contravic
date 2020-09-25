@@ -1,4 +1,4 @@
-# myDB.py; use python3
+# 
 #
 # Imports
 import json

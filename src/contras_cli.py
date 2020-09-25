@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+#
 # import os.path as os_path
 # import sys
 """
@@ -12,8 +12,8 @@ import crypty as cpy
 import MyDB as DB
 from Db_template import customDB
 
-
 db_name = "myDB"
+
 
 def my_print(cad):
     print(cad)
@@ -25,7 +25,7 @@ def my_input(cad):
 
 
 def is_valid_input(inp):
-    jval = '{ "val": ' + '['+inp+']' + ' }'
+    jval = '{ "val": ' + '[' + inp + ']' + ' }'
     try:
         json.loads(jval)
         return True
@@ -45,7 +45,7 @@ def dump(db):
     for record in db:
         for f in list(record):
             v = record[f]
-            my_print("{}:  {}".format(f,v))
+            my_print("{}:  {}".format(f, v))
         my_print("\n")
 
 
@@ -69,36 +69,36 @@ def check_input(key):
 
 
 def read(db_temp=None):
-    db=[]
-    follow=True
+    db = []
+    follow = True
     while follow:
         rd = read_record(db_temp[0])
-        DB.add_record(rd,db)
+        DB.add_record(rd, db)
         follow = read_prompt("Another [y/n]")
         follow = yOrN(follow)
     return db
 
 
-def save(db,file_name=None):
+def save(db, file_name=None):
     if file_name is None:
-        Fd = open("myDB.json","w+")
-        Fd.write(json.dumps(db)+"\n")
+        Fd = open("myDB.json", "w+")
+        Fd.write(json.dumps(db) + "\n")
         Fd.close()
     else:
-        Fd = open(file_name+".json","w+")
-        Fd.write(json.dumps(db)+"\n")
+        Fd = open(file_name + ".json", "w+")
+        Fd.write(json.dumps(db) + "\n")
         Fd.close()
 
 
 def load(file_name=None):
     if file_name is None:
-        Fd = open("myDB.json","r+")
+        Fd = open("myDB.json", "r+")
         cad = Fd.read()
         db = json.loads(cad)
         Fd.close()
         return db
     else:
-        Fd = open(file_name+".json","r")
+        Fd = open(file_name + ".json", "r")
         db = Fd.read()
         db = json.loads(db)
         Fd.close()
@@ -108,7 +108,7 @@ def load(file_name=None):
 def read_record(rd_temp=None):
     rd = {}
     if rd_temp is None:
-        return rd 
+        return rd
     else:
         for key in rd_temp.keys():
             if type(rd_temp[key]) is type([]):
@@ -116,7 +116,7 @@ def read_record(rd_temp=None):
                 rd[key] = read(rd_temp[key])
             else:
                 val = check_input(key)
-                rd[key] = json.loads(val)   
+                rd[key] = json.loads(val)
     return rd
 
 
@@ -137,12 +137,12 @@ def load_db(file_name=None, pass_frase=None):
     return new_db
 
 
-def save_db(db,file_Name=None,pass_frase=None):
+def save_db(db, file_Name=None, pass_frase=None):
     if pass_frase is None:
-        save(db,file_Name)
+        save(db, file_Name)
     else:
         o_f = open(db_name + "_enc.json", "w+")
-        out = json.dumps(db)+"\n"
+        out = json.dumps(db) + "\n"
         out = cpy.encrypt(pass_frase, out)
         o_f.write(out + "\n")
         o_f.close()
@@ -177,4 +177,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
