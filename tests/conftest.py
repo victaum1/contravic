@@ -18,6 +18,8 @@ def out_data():
         o_dat.append(f.read())
     with open("tests/fixtures/spec_db_enc.json") as f:
         o_dat.append(f.read())
+    with open("tests/fixtures/spec_db.json") as f:
+        o_dat.append(f.read())
     return o_dat
 
 
@@ -47,7 +49,7 @@ def inputs():
            ],
            [
             "C",
-            "myDB",
+            "miDB",
             "S",
             "S",
             "Contra 1"
@@ -57,24 +59,24 @@ def inputs():
 @pytest.fixture
 def spec_out_es():
     return [[
-  "Crear nueva DB o cargarla? (N/C): ",
+  "¿Crear nueva DB o cargarla? (N/C): ",
   "Creando nueva DB...",
   "Account?: ",
   "Users: ",
   "User?: ",
   "PassWord?: ",
-  "Another [y/n]?: ",
-  "Another [y/n]?: ",
-  "Encriptar DB? (S/N): ",
+  "¿Otro [s/n]?: ",
+  "¿Otro [s/n]?: ",
+  "¿Encriptar DB? (S/N): ",
            ],
            [
-  "Crear nueva DB o cargarla? (N/C): ",
+  "¿Crear nueva DB o cargarla? (N/C): ",
   "Nombre de archivo para DB: ",
   "Account:  Cuenta 1",
   "Users:  [{'User': 'Usuario 1', 'PassWord': 'Contra 1'}]",
   "\n",
-  "Extraer contra o salir? (E/S): ",
-    "Encriptar DB? (S/N): ",
+  "¿Extraer contra o salir? (E/S): ",
+    "¿Encriptar DB? (S/N): ",
   "Contraseña: "
             ],[],[]]
 
@@ -82,8 +84,7 @@ def spec_out_es():
 @pytest.fixture
 def out_fn():
     return [
-            "myDB.json",
-            "myDB_enc.json"
+            "miDB.json",
+            "miDB_enc.json"
             ]
-
 

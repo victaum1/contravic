@@ -5,6 +5,15 @@ import json
 # import pdb # debug
 from functools import partial #functional style
 
+def is_valid_input(inp):
+    jval = '{ "val": ' + '[' + inp + ']' + ' }'
+    try:
+        json.loads(jval)
+        return True
+    except:
+        return False
+
+
 def add_record(record,db):
     db.append(record)
 

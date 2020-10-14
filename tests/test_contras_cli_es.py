@@ -1,74 +1,68 @@
-# 
+#
 # testin main: contras_cli
 
 import pytest
 import sys
-from crypty import encrypt, decrypt
 import pdb
 
-sys.path.append("../src")
+sys.path.append("./src")
+from crypty import encrypt, decrypt
+import io_wrap
 import contras_cli as cli
-from MyMock import MockInOut, MockOpen
-
-def setup_open():
-    MockOpen.args = []
-    MockOpen.called = False
-    MockOpen.read_called = False
-    MockOpen.write_called = False
-    MockOpen.close_called = False
-    MockOpen.out_cads = []
-
-def setup_InOut():
-    MockInOut.outputs = []
-
 
 @pytest.mark.happy
-def test_usr_happy_path_1(inputs, out_fn, in_data, spec_out_es):
-    setup_InOut()
-    setup_open()
+def test_usr_happy_path_1(mocker, inputs, out_fn, spec_out_es,
+        out_data):
+    t_inputs = inputs[0]
+    t_outputs = []
 
-    m_input = MockInOut(inputs[0])
+    def m_input(s):
+        t_outputs.append(s)
+        return t_inputs.pop(0)
 
-    cli.my_input = m_input.input
-    cli.gpw.getpass = m_input.input
-    cli.DB.read_prompt = m_input.input
-    cli.my_print = MockInOut().print
-    cli.open = MockOpen().open
+    def m_print(s):
+        t_outputs.append(s)
+
+    mocker.patch.object(cli,'my_input', side_effect=m_input)
+    mocker.patch.object(cli.gpw,'getpass', side_effect=m_input)
+    mocker.patch.object(cli,'my_print', side_effect=m_print)
+    m_open = mocker.mock_open()
+    mocker.patch.object(cli,'my_open', m_open)
 
     cli.main()
 
-    assert MockInOut.outputs == spec_out_es[0]
-    assert MockOpen.called == True 
-    assert MockOpen.write_called == True
-    assert MockOpen.close_called == True
-    assert MockOpen.args[0] == (out_fn[0],'w+')
-    assert MockOpen.out_cads[0] == in_data[1] 
+    m_open.assert_called_once_with(out_fn[0],'w+')
+    assert t_outputs == spec_out_es[0]
+    handle = m_open()
+    handle.close.assert_called_once()
+    handle.write.assert_called_with(out_data[2])
 
-
-#@pytest.mark.skip
 @pytest.mark.happy
-def test_usr_happy_path_2(inputs, in_data, out_fn, spec_out_es):
-    setup_InOut()
-    setup_open()
-
+def test_usr_happy_path_2(mocker, inputs, in_data, out_data,
+        out_fn, spec_out_es):
+    call = mocker.call
+    t_inputs = inputs[1]
     pass_frase = inputs[1][4]
-    
-    m_input = MockInOut(inputs[1])
-    m_print = MockInOut()
-    m_open = MockOpen(in_data[1])
+    t_outputs = []
 
-    cli.my_input = m_input.input
-    cli.gpw.getpass = m_input.input
-    cli.DB.read_prompt = m_input.input
-    cli.my_print = m_print.print
-    cli.open = m_open.open
+    def m_input(s):
+        t_outputs.append(s)
+        return t_inputs.pop(0)
+
+    def m_print(s):
+        t_outputs.append(s)
+
+    mocker.patch.object(cli,'my_input', side_effect=m_input)
+    mocker.patch.object(cli.gpw,'getpass', side_effect=m_input)
+    mocker.patch.object(cli,'my_print', side_effect=m_print)
+    m_open = mocker.mock_open(read_data=in_data[1])
+    mocker.patch.object(cli,'my_open', m_open)
 
     cli.main()
 
-    assert MockOpen.called == True 
-    assert MockOpen.write_called == True
-    assert MockOpen.close_called == True
-    assert MockOpen.args[0] == (out_fn[0],'r')
-    assert MockOpen.args[1] == (out_fn[1],'w+')
-    assert decrypt(pass_frase, MockOpen.out_cads[0]) == in_data[1]
-    assert MockInOut.outputs == spec_out_es[1]
+    assert t_outputs == spec_out_es[1]
+    calls = [call(out_fn[0]), call(out_fn[1],'w+')]
+    m_open.assert_has_calls(calls,any_order=True)
+    handle = m_open()
+    (_arg, ) = handle.write.call_args[0]
+    assert decrypt(pass_frase, _arg) == in_data[1]
