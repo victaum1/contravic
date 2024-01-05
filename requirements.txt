@@ -1,4 +1,4 @@
-pycryptodomex==3.9.7
+pycryptodomex==3.19.1
 pyinotify==0.9.6
 pytest==5.4.3
 pytest-cov==2.10.0
